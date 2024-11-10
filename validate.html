@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Código QR</title>
+</head>
+<body>
+    <h1>Verificación del Código QR</h1>
+    <div id="message"></div>
+
+    <script>
+        window.addEventListener('load', () => {
+            // Obtener el parámetro 'id' de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const qrId = urlParams.get('id'); // El id que viene en el QR
+
+            // Obtener el ID almacenado localmente (que corresponde al QR generado)
+            const storedId = localStorage.getItem('qrUniqueId');
+
+            const messageElement = document.getElementById('message');
+
+            // Validar si el ID del QR es correcto
+            if (qrId === storedId) {
+                // Si el ID coincide, el QR es válido, redirigir
+                messageElement.textContent = '¡Acceso permitido! Redirigiendo...';
+                setTimeout(() => {
+                    window.location.href = 'api.html'; // Redirige a api.html
+                }, 2000);
+            } else {
+                // Si el ID no coincide, mostrar mensaje de error
+                messageElement.textContent = 'Este código QR no es válido o ya ha sido usado.';
+            }
+        });
+    </script>
+</body>
+</html>
